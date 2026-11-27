@@ -24,6 +24,7 @@
             background: #172033;
             color: white;
             padding: 25px 15px;
+            overflow-y: auto;
         }
 
         .brand {
@@ -77,6 +78,29 @@
             text-align: right;
         }
 
+        .logout-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #aeb8ca;
+            background: transparent;
+            border: none;
+            padding: 12px 15px;
+            width: 100%;
+            border-radius: 8px;
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .logout-button:hover {
+            background: #293750;
+            color: white;
+        }
+
+        .logout-button i {
+            font-size: 18px;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 75px;
@@ -88,12 +112,14 @@
                 padding: 0 5px;
             }
 
-            .sidebar a {
+            .sidebar a,
+            .logout-button {
                 justify-content: center;
                 padding: 12px 5px;
             }
 
             .sidebar a span,
+            .logout-button span,
             .menu-label {
                 display: none;
             }
@@ -105,6 +131,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Sidebar -->
@@ -117,14 +144,14 @@
         <div class="menu-label">Main Menu</div>
 
         <!-- Dashboard -->
-        <a href="{{ route('dashboard') }}"
+        <a href="{{ secure_url(route('dashboard', [], false)) }}"
            class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
         </a>
 
         <!-- My Tasks -->
-        <a href="{{ route('tasks.index') }}"
+        <a href="{{ secure_url(route('tasks.index', [], false)) }}"
            class="{{ request()->routeIs('tasks.*') ? 'active' : '' }}">
             <i class="bi bi-check2-square"></i>
             <span>My Tasks</span>
@@ -133,28 +160,28 @@
         <div class="menu-label">Workspace</div>
 
         <!-- Events -->
-        <a href="{{ route('events.index') }}"
+        <a href="{{ secure_url(route('events.index', [], false)) }}"
            class="{{ request()->routeIs('events.*') ? 'active' : '' }}">
             <i class="bi bi-calendar-event"></i>
             <span>Events</span>
         </a>
 
         <!-- Checkpoints -->
-        <a href="{{ route('checkpoints.index') }}"
+        <a href="{{ secure_url(route('checkpoints.index', [], false)) }}"
            class="{{ request()->routeIs('checkpoints.*') ? 'active' : '' }}">
             <i class="bi bi-flag"></i>
             <span>Checkpoints</span>
         </a>
 
         <!-- My Notes -->
-        <a href="{{ route('notes.index') }}"
+        <a href="{{ secure_url(route('notes.index', [], false)) }}"
            class="{{ request()->routeIs('notes.*') ? 'active' : '' }}">
             <i class="bi bi-journal-text"></i>
             <span>My Notes</span>
         </a>
 
         <!-- Calendar -->
-        <a href="{{ route('calendar.index') }}"
+        <a href="{{ secure_url(route('calendar.index', [], false)) }}"
            class="{{ request()->routeIs('calendar.*') ? 'active' : '' }}">
             <i class="bi bi-calendar3"></i>
             <span>Calendar</span>
@@ -163,20 +190,19 @@
         <div class="menu-label">Account</div>
 
         <!-- Settings -->
-        <a href="{{ route('settings.index') }}"
+        <a href="{{ secure_url(route('settings.index', [], false)) }}"
            class="{{ request()->routeIs('settings.*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i>
             <span>Settings</span>
         </a>
 
         <!-- Logout -->
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ secure_url(route('logout', [], false)) }}" method="POST">
             @csrf
-            <button type="submit"
-                    class="btn text-start w-100 mt-2"
-                    style="color: #aeb8ca;">
-                <i class="bi bi-box-arrow-left me-2"></i>
-                Logout
+
+            <button type="submit" class="logout-button mt-2">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Logout</span>
             </button>
         </form>
 
