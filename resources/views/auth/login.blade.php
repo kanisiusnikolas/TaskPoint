@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,6 +17,7 @@
             align-items: center;
             justify-content: center;
             font-family: Arial, sans-serif;
+            padding: 20px;
         }
 
         .login-card {
@@ -24,7 +26,7 @@
             background: white;
             padding: 40px;
             border-radius: 18px;
-            box-shadow: 0 10px 40px rgba(0,0,0,.06);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .06);
         }
 
         .logo {
@@ -35,6 +37,11 @@
         .btn-primary {
             background: #4f46e5;
             border-color: #4f46e5;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+            border-color: #4338ca;
         }
     </style>
 </head>
@@ -58,33 +65,50 @@
         </div>
     @endif
 
-    <form action="{{ route('login.process') }}" method="POST">
+    {{-- Form login menggunakan HTTPS --}}
+    <form action="{{ secure_url(route('login.process', [], false)) }}" method="POST">
         @csrf
 
         <div class="mb-3">
             <label class="form-label">Email Address</label>
-            <input type="email" name="email"
+            <input
+                type="email"
+                name="email"
                 class="form-control"
                 value="{{ old('email') }}"
-                placeholder="nama@email.com" required>
+                placeholder="nama@email.com"
+                autocomplete="email"
+                required
+            >
         </div>
 
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" name="password"
+            <input
+                type="password"
+                name="password"
                 class="form-control"
-                placeholder="Masukkan password" required>
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required
+            >
         </div>
 
         <div class="form-check mb-4">
-            <input type="checkbox" name="remember"
-                class="form-check-input" id="remember">
+            <input
+                type="checkbox"
+                name="remember"
+                class="form-check-input"
+                id="remember"
+            >
+
             <label class="form-check-label" for="remember">
                 Remember me
             </label>
         </div>
 
         <button type="submit" class="btn btn-primary w-100 py-2">
+            <i class="bi bi-box-arrow-in-right me-1"></i>
             Login
         </button>
     </form>
@@ -92,7 +116,11 @@
     <div class="text-center mt-4">
         <small class="text-secondary">
             Belum memiliki akun?
-            <a href="{{ route('register') }}" class="text-decoration-none">
+
+            <a
+                href="{{ secure_url(route('register', [], false)) }}"
+                class="text-decoration-none"
+            >
                 Register
             </a>
         </small>
